@@ -60,6 +60,7 @@ public class PlaygroundController implements Initializable {
         
         recentPlayerLabel.setText(recentGame.getRecentPLayer().getName());
         
+        System.out.println("Labels are connected!");
        
     }
     
