@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PlaygroundController">
+   <children>
+      <HBox prefHeight="130.0" prefWidth="1920.0" styleClass="menuBar" />
+      <HBox layoutY="1010.0" prefHeight="70.0" prefWidth="1920.0" styleClass="menuBar" />
+      <AnchorPane fx:id="playfield" layoutY="130.0" onScroll="#movePlayfield" prefHeight="880.0" prefWidth="5760.0" styleClass="playground">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="35.0" layoutY="340.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="5511.0" layoutY="340.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
