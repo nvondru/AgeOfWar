@@ -1,0 +1,57 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16.04.2018, 11:04:09
+    Author     : nicolasvondru
+*/
+.root{
+    -fx-background-color: dimgray;
+    -fx-font-family: "Belwe Bd BT";
+}
+
+.playground{
+    -fx-background-color: lightgray;
+}
+
+.button{    
+    -fx-background-color: #0070c6;
+    -fx-text-fill: white;
+    -fx-border-color: #002468;
+    -fx-border-width: 4;
+    -fx-background-radius: 40;
+    -fx-border-radius: 40;   
+    -fx-font-size: 23;
+}
+.button:hover{
+    -fx-background-color: #0094e1;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.baseLabel{
+    -fx-font-size: 20;
+    -fx-text-fill: red;
+}
+
+.moneyLabel{
+    -fx-font-size: 25;
+    -fx-text-fill: yellow;
+    -fx-background-color: lightgray;
+    -fx-background-radius: 100;
+}
+
+.recentPlayerLabel{
+    -fx-font-size: 25;
+    -fx-text-fill: White;
+}
+
+.menuBar{
+    -fx-background-color: dimgray;
+}
+
+.meele{
+    -fx-background-color: black;
+}
