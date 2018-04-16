@@ -5,6 +5,8 @@
  */
 package Model;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 
@@ -19,12 +21,18 @@ public class Meele extends Unit{
     
     //Constructor
     public Meele(double position){
-        form = new Rectangle();
-        form.setWidth(100);
-        form.setHeight(200);
+        form = new ImageView();
+        form.setFitWidth(100);
+        form.setFitHeight(200);
         form.getStyleClass().add("meele");
         form.setLayoutX(position);
         form.setLayoutY(505);
+        if(position > 4000){
+            form.setImage(new Image(getClass().getResource("/Images/meele_mirrored.png").toString()));
+        }else{
+            form.setImage(new Image(getClass().getResource("/Images/meele.png").toString()));
+        }
+        
     }
     //Helper Methods
     
