@@ -40,8 +40,17 @@ public class Player {
     public void createUnit(String unitType){
         switch(unitType){
             case "meele":
-                Meele unit = new Meele(position);
-                listUnits.add(unit);
+                Meele meele = new Meele(position);
+                listUnits.add(meele);
+            case "range":
+                Range range = new Range(position);
+                listUnits.add(range);
+            case "tank":
+                Tank tank = new Tank(position);
+                listUnits.add(tank);
+            case "healer":
+                Healer healer = new Healer(position);
+                listUnits.add(healer);
         }
     }
 //    Getter/Setter

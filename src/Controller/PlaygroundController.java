@@ -95,7 +95,18 @@ public class PlaygroundController implements Initializable {
         recentGame.getRecentPLayer().createUnit("range");
         playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
     }
+    
+    @FXML
+    private void createTank(ActionEvent event) {
+        recentGame.getRecentPLayer().createUnit("tank");
+        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+    }
 
+    @FXML
+    private void createHealer(ActionEvent event) {
+        recentGame.getRecentPLayer().createUnit("healer");
+        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+    }
     
 //    Helper Methods
     private void connectBaseLabels() {

@@ -29,9 +29,9 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="130.0" text="Range" />
-            <Button mnemonicParsing="false" prefWidth="130.0" text="Tank" />
-            <Button mnemonicParsing="false" prefWidth="130.0" text="Healer" />
+            <Button mnemonicParsing="false" onAction="#createRange" prefWidth="130.0" text="Range" />
+            <Button mnemonicParsing="false" onAction="#createTank" prefWidth="130.0" text="Tank" />
+            <Button mnemonicParsing="false" onAction="#createHealer" prefWidth="130.0" text="Healer" />
          </children></HBox>
       <HBox layoutY="1010.0" prefHeight="70.0" prefWidth="1920.0" styleClass="menuBar" />
       <AnchorPane fx:id="playfield" layoutY="130.0" onScroll="#movePlayfield" prefHeight="880.0" prefWidth="5760.0" styleClass="playground">
