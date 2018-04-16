@@ -74,6 +74,7 @@ public class PlaygroundController implements Initializable {
         }
     }
     
+    /* Create Units */
     @FXML
     private void changePlayer(KeyEvent event) {
         if(event.getCode().equals(KeyCode.Z)){
@@ -86,6 +87,12 @@ public class PlaygroundController implements Initializable {
     @FXML
     private void createMeele(ActionEvent event) {
         recentGame.getRecentPLayer().createUnit("meele");
+        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+    }
+    
+    @FXML
+    private void createRange(ActionEvent event) {
+        recentGame.getRecentPLayer().createUnit("range");
         playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
     }
 
