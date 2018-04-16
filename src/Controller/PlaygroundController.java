@@ -86,7 +86,7 @@ public class PlaygroundController implements Initializable {
     @FXML
     private void createMeele(ActionEvent event) {
         recentGame.getRecentPLayer().createUnit("meele");
-        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size()-1).getForm());
+        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
     }
 
     

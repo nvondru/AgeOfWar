@@ -5,6 +5,7 @@
  */
 package Model;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -22,7 +23,7 @@ public abstract class Unit {
     protected int cost;
     protected int range;
     protected double creationTime;
-    protected Rectangle form;
+    protected ImageView form;
     
 //    Constructor    
     
@@ -47,7 +48,7 @@ public abstract class Unit {
     
 //    Getter/Setter
 
-    public Rectangle getForm() {
+    public ImageView getForm() {
         return form;
     }
     
