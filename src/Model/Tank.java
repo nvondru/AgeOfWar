@@ -25,11 +25,11 @@ public class Tank extends Unit{
         form.setLayoutX(position);
         form.setLayoutY(505);
         if(position > 4000){
-            form.setImage(new Image(getClass().getResource("/Images/meele_mirrored.png").toString()));
+            form.setImage(new Image(getClass().getResource("/Images/tank_mirrored.bmp").toString()));
         }else{
-            form.setImage(new Image(getClass().getResource("/Images/meele.png").toString()));
+            form.setImage(new Image(getClass().getResource("/Images/tank.bmp").toString()));
         }
-        
+        setCost(40);
     }
     //Helper Methods
     

@@ -32,7 +32,7 @@ public class Meele extends Unit{
         }else{
             form.setImage(new Image(getClass().getResource("/Images/meele.png").toString()));
         }
-        
+        setCost(10);
     }
     //Helper Methods
     

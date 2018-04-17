@@ -37,21 +37,32 @@ public class Player {
     
     
 //    Methods
-    public void createUnit(String unitType){
+    //create unit 
+    public boolean createUnit(String unitType){
         switch(unitType){
             case "meele":
                 Meele meele = new Meele(position);
-                listUnits.add(meele);
+                return buyUnit(meele);
             case "range":
                 Range range = new Range(position);
-                listUnits.add(range);
+                return buyUnit(range);
             case "tank":
                 Tank tank = new Tank(position);
-                listUnits.add(tank);
+                return buyUnit(tank);
             case "healer":
                 Healer healer = new Healer(position);
-                listUnits.add(healer);
+                return buyUnit(healer);
         }
+        return false;
+    }
+    //Check money and add the unit to the array
+    public boolean buyUnit(Unit unit){
+        if(getMoney() >= unit.getCost()){
+           listUnits.add(unit); 
+           setMoney(getMoney() - unit.getCost());
+           return true;
+        }
+        return false;
     }
 //    Getter/Setter
 

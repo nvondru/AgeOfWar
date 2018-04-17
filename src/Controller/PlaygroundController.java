@@ -67,10 +67,11 @@ public class PlaygroundController implements Initializable {
 //    FXML Methods
     @FXML
     private void movePlayfield(ScrollEvent event) {
-        if(event.getDeltaY() < 0){
+        if(event.getDeltaY() < 0 && playfield.getLayoutX() >= -4000){
             playfield.setLayoutX(playfield.getLayoutX() - 200);
-        }else{
+        }else if (event.getDeltaY() > 0 && playfield.getLayoutX() <= 0){
             playfield.setLayoutX(playfield.getLayoutX() + 200);
+            System.out.println(playfield.getLayoutX());
         }
     }
     
@@ -79,33 +80,37 @@ public class PlaygroundController implements Initializable {
     private void changePlayer(KeyEvent event) {
         if(event.getCode().equals(KeyCode.Z)){
             recentGame.changePlayer();
-            moneyLabel.setText(String.valueOf(recentGame.getRecentPLayer().getMoney()));
             recentPlayerLabel.setText(recentGame.getRecentPLayer().getName());
+            connectMoneyLabel();
         }        
     }
     
     @FXML
-    private void createMeele(ActionEvent event) {
-        recentGame.getRecentPLayer().createUnit("meele");
-        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+    private void createMeele(ActionEvent event) { 
+        if(recentGame.getRecentPLayer().createUnit("meele")){
+            playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+        }
     }
     
     @FXML
     private void createRange(ActionEvent event) {
-        recentGame.getRecentPLayer().createUnit("range");
-        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+        if(recentGame.getRecentPLayer().createUnit("range")){
+            playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+        }
     }
     
     @FXML
     private void createTank(ActionEvent event) {
-        recentGame.getRecentPLayer().createUnit("tank");
-        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+        if(recentGame.getRecentPLayer().createUnit("tank")){
+            playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+        }
     }
 
     @FXML
     private void createHealer(ActionEvent event) {
-        recentGame.getRecentPLayer().createUnit("healer");
-        playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+        if(recentGame.getRecentPLayer().createUnit("healer")){
+            playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
+        }
     }
     
 //    Helper Methods

@@ -28,6 +28,7 @@ public class AgeOfWar extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         mainStage = stage;
+        mainStage.setResizable(false);
         FXMLLoader loaderStart = new FXMLLoader();   
         loaderStart.setLocation(getClass().getResource("/View/StartWindow.fxml"));
         

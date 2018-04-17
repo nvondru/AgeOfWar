@@ -46,10 +46,18 @@ public abstract class Unit {
         
     }
     
-//    Getter/Setter
+//    Getteer/Setter
 
     public ImageView getForm() {
         return form;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
     
     
