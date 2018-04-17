@@ -5,6 +5,7 @@
  */
 package Model;
 
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -17,19 +18,21 @@ public class Tank extends Unit{
     
     
     //Constructor
-    public Tank(double position){
-        form = new ImageView();
-        form.setFitWidth(100);
-        form.setFitHeight(200);
+    public Tank(double position, Player myPlayer){
+        super(position, myPlayer);    
+        
         form.getStyleClass().add("meele");
-        form.setLayoutX(position);
-        form.setLayoutY(505);
-        if(position > 4000){
+        cost = 40;
+        health = 180;
+        damage = 10;
+        armor = 10;
+        
+        if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/tank_mirrored.bmp").toString()));
         }else{
-            form.setImage(new Image(getClass().getResource("/Images/tank.bmp").toString()));
+            form.setImage(new Image(getClass().getResource("/Images/tank.bmp").toString()));        
         }
-        setCost(40);
+        
     }
     //Helper Methods
     

@@ -5,6 +5,8 @@
  */
 package Model;
 
+import Controller.PlaygroundController;
+
 /**
  *
  * @author nicolasvondru
@@ -17,13 +19,17 @@ public class Game {
     
     private Player recentPlayer;
     
+    private PlaygroundController playgroundController;
+    
     
     
 //    Constructor
     
-    public Game() {
-        player1 = new Player("Player 1", 400.0);
-        player2 = new Player("Player 2", 5260.0);
+    public Game(PlaygroundController playgroundController) {
+        this.playgroundController = playgroundController;
+        
+        player1 = new Player("Player 1", 400.0, this);
+        player2 = new Player("Player 2", 5260.0, this);
         
         recentPlayer = player1;
     }
@@ -49,6 +55,11 @@ public class Game {
     public Player getRecentPLayer(){
         return recentPlayer;
     }
+
+    public PlaygroundController getPlaygroundController() {
+        return playgroundController;
+    }
+    
 
     
     

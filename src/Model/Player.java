@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Controller.PlaygroundController;
 import java.util.ArrayList;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -23,10 +24,13 @@ public class Player {
     private Base base;
     private final StringProperty name = new SimpleStringProperty();
     private double position;
+    private Game recentGame;
 
 //    Constructor
     
-    public Player(String name, double position){
+    public Player(String name, double position, Game recentGame){
+        this.recentGame = recentGame;
+        
         this.name.set(name);
         this.position = position;
         money.set(2000);
@@ -41,16 +45,16 @@ public class Player {
     public boolean createUnit(String unitType){
         switch(unitType){
             case "meele":
-                Meele meele = new Meele(position);
+                Meele meele = new Meele(position, this);
                 return buyUnit(meele);
             case "range":
-                Range range = new Range(position);
+                Range range = new Range(position, this);
                 return buyUnit(range);
             case "tank":
-                Tank tank = new Tank(position);
+                Tank tank = new Tank(position, this);
                 return buyUnit(tank);
             case "healer":
-                Healer healer = new Healer(position);
+                Healer healer = new Healer(position, this);
                 return buyUnit(healer);
         }
         return false;
@@ -98,6 +102,11 @@ public class Player {
     public Base getBase() {
         return base;
     }
+
+    public Game getRecentGame() {
+        return recentGame;
+    }
+    
     
     
     

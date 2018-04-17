@@ -54,7 +54,7 @@ public class PlaygroundController implements Initializable {
         scene = new Scene(root);
         this.master = master; 
         
-        recentGame = new Game();        
+        recentGame = new Game(this);        
         connectBaseLabels();        
         connectMoneyLabel();
         
@@ -70,8 +70,7 @@ public class PlaygroundController implements Initializable {
         if(event.getDeltaY() < 0 && playfield.getLayoutX() >= -4000){
             playfield.setLayoutX(playfield.getLayoutX() - 200);
         }else if (event.getDeltaY() > 0 && playfield.getLayoutX() <= 0){
-            playfield.setLayoutX(playfield.getLayoutX() + 200);
-            System.out.println(playfield.getLayoutX());
+            playfield.setLayoutX(playfield.getLayoutX() + 200);            
         }
     }
     
@@ -87,6 +86,7 @@ public class PlaygroundController implements Initializable {
     
     @FXML
     private void createMeele(ActionEvent event) { 
+        
         if(recentGame.getRecentPLayer().createUnit("meele")){
             playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
         }
@@ -139,6 +139,11 @@ public class PlaygroundController implements Initializable {
 
     public Scene getScene() {
         return scene;
+        
+    }
+
+    public AnchorPane getPlayfield() {
+        return playfield;
     }
     
     
