@@ -17,19 +17,21 @@ public class Healer  extends Unit{
     
     
     //Constructor
-    public Healer(double position){
-        form = new ImageView();
-        form.setFitWidth(100);
-        form.setFitHeight(200);
+    public Healer(double position, Player myPlayer){
+        super(position, myPlayer);  
+        
         form.getStyleClass().add("meele");
-        form.setLayoutX(position);
-        form.setLayoutY(505);
-        if(position > 4000){
+        cost = 30;
+        health = 60;
+        damage = 0;
+        armor = 0;
+        
+        if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/healer_mirrored.bmp").toString()));
         }else{
             form.setImage(new Image(getClass().getResource("/Images/healer.bmp").toString()));
         }
-        setCost(30);
+        
     }
     //Helper Methods
     

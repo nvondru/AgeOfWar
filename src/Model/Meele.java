@@ -20,19 +20,23 @@ public class Meele extends Unit{
     
     
     //Constructor
-    public Meele(double position){
-        form = new ImageView();
-        form.setFitWidth(100);
-        form.setFitHeight(200);
+    public Meele(double position, Player myPlayer){
+        super(position, myPlayer);
+                
         form.getStyleClass().add("meele");
-        form.setLayoutX(position);
-        form.setLayoutY(505);
-        if(position > 4000){
+        
+        cost = 10;
+        health = 120;
+        damage = 30;
+        armor = 5;
+        
+                
+        if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/meele_mirrored.png").toString()));
         }else{
             form.setImage(new Image(getClass().getResource("/Images/meele.png").toString()));
         }
-        setCost(10);
+        
     }
     //Helper Methods
     

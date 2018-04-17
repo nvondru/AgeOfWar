@@ -17,19 +17,21 @@ public class Range extends Unit {
     
     
     //Constructor
-    public Range(double position){
-        form = new ImageView();
-        form.setFitWidth(100);
-        form.setFitHeight(200);
+    public Range(double position, Player myPlayer){
+        super(position, myPlayer); 
+        
         form.getStyleClass().add("meele");
-        form.setLayoutX(position);
-        form.setLayoutY(505);
-        if(position > 4000){
+        cost = 20;
+        health = 100;
+        damage = 20;
+        armor = 3;
+        
+        if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/range_mirrored.bmp").toString()));
         }else{
             form.setImage(new Image(getClass().getResource("/Images/range.bmp").toString()));
         }
-        setCost(20);
+        
     }
     //Helper Methods
     
