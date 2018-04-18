@@ -7,6 +7,7 @@ package Model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -17,12 +18,13 @@ public class Base {
     
 //    Variables
     private final IntegerProperty health = new SimpleIntegerProperty();
-    
+    private Rectangle form;
     
 //    Constructor
     
-    public Base(){
+    public Base(Rectangle form){
         health.set(5000);
+        this.form = form;
     }
     
 //    Methods
@@ -41,6 +43,14 @@ public class Base {
 
     public IntegerProperty healthProperty() {
         return health;
+    }
+
+    public Rectangle getForm() {
+        return form;
+    }
+
+    public void setForm(Rectangle form) {
+        this.form = form;
     }
     
 }

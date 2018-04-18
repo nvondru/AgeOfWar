@@ -11,6 +11,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -28,14 +29,13 @@ public class Player {
 
 //    Constructor
     
-    public Player(String name, double position, Game recentGame){
+    public Player(String name, double position, Game recentGame, Rectangle form){
         this.recentGame = recentGame;
-        
         this.name.set(name);
         this.position = position;
         money.set(2000);
         listUnits = new ArrayList<>();
-        base = new Base();
+        base = new Base(form);
         
     }
     

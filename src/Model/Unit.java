@@ -35,10 +35,12 @@ public abstract class Unit {
     protected boolean isDead;
     protected AnimationTimer moveTimer;
     protected ScaleTransition attackTransition;
+    protected ScaleTransition attackBaseTransition;
     
     protected Player myPlayer;    
     protected Player enemyPlayer;
     protected Unit target;
+    
    
 
 //    Constructor    
@@ -62,6 +64,7 @@ public abstract class Unit {
         isDead = false;
         initMoveTimer();
         initAttackTransition();
+        initAttackBaseTransition();
         move();
     }
     
@@ -75,9 +78,14 @@ public abstract class Unit {
         moveTimer.stop();
         attackTransition.playFromStart();
     }
-    
+      
     private void attack(){
         target.takeDamage(damage);
+    }
+    private void attackBase(){
+        moveTimer.stop();
+        attackBaseTransition.playFromStart();
+        //enemyPlayer.getBase().getDamage(damage);
     }
     
     public void takeDamage(int damageTaken){
@@ -108,23 +116,46 @@ public abstract class Unit {
         moveTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                
-                if(myPlayer.getName().equals("Player 1")){
-                    form.setLayoutX(form.getLayoutX() + 2);
-                }else{
-                    form.setLayoutX(form.getLayoutX() - 2);
-                }
-                
-                if(!enemyPlayer.getListUnits().isEmpty()){
+                int index = findIndexOfUnit();
+                if(!enemyPlayer.getListUnits().isEmpty() && index == 0){
                     target = enemyPlayer.getListUnits().get(0);
                     if(form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){                        
-                        fight();                       
+                        fight();      
                     }
-                }                
+                }else if(form.getBoundsInParent().intersects(enemyPlayer.getBase().getForm().getBoundsInParent())){
+                    attackBase();
+                }
+                if(index != 0){
+                    target = myPlayer.getListUnits().get(index - 1);
+                    if(form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){
+                       // waiting
+                    }else{
+                        walk();
+                    }
+                }else{
+                    walk();
+                }
+
             }                     
         };    
     }
+    private void walk(){
+        if(myPlayer.getName().equals("Player 1")){
+            form.setLayoutX(form.getLayoutX() + 20);
+        }else{
+            form.setLayoutX(form.getLayoutX() - 20);
+       }         
+    }
     
+    private int findIndexOfUnit(){
+        for(Unit index : myPlayer.getListUnits()){
+            if(index.getForm().equals(form)){
+                return myPlayer.getListUnits().indexOf(index);
+            }
+        }
+        return -1;
+    }
+    //Attack Unit
     private void initAttackTransition() {
         attackTransition = new ScaleTransition(Duration.millis(500), form);
         attackTransition.setByX(1.2);
@@ -145,7 +176,29 @@ public abstract class Unit {
             
         });        
     }
-    
+    //Attack Base
+    private void initAttackBaseTransition() {
+        attackBaseTransition = new ScaleTransition(Duration.millis(500), form);
+        attackBaseTransition.setByX(1.5);
+        attackBaseTransition.setByY(1.5);
+        attackBaseTransition.setAutoReverse(true);   
+        attackBaseTransition.setCycleCount(2);        
+        attackBaseTransition.setOnFinished((event) -> {
+            
+            if(!enemyPlayer.getListUnits().isEmpty()){//If enemy Player are alive
+                target = enemyPlayer.getListUnits().get(0);
+                attackBaseTransition.stop();
+                fight();
+            }else if(enemyPlayer.getBase().getHealth() <= 0){ //If enemy Base is destroyed
+                attackBaseTransition.stop();
+            }else{ //Attack
+                enemyPlayer.getBase().getDamage(damage);
+                attackBaseTransition.setDelay(Duration.millis(500));            
+                attackBaseTransition.playFromStart();  
+            }
+            
+        });        
+    }    
 //    Getter/Setter
 
     public ImageView getForm() {

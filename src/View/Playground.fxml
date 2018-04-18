@@ -37,8 +37,8 @@
       <AnchorPane fx:id="playfield" layoutY="130.0" onScroll="#movePlayfield" prefHeight="880.0" prefWidth="5760.0" styleClass="playground">
          <children>
             <Rectangle fx:id="ground" fill="#399e2a" height="400.0" layoutY="480.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="5760.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="400.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="400.0" layoutX="5360.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+            <Rectangle fx:id="base1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="400.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+            <Rectangle fx:id="base2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="400.0" layoutX="5360.0" layoutY="305.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
             <Label fx:id="basePlayer1" alignment="CENTER" layoutX="143.0" layoutY="257.0" prefHeight="34.0" prefWidth="114.0" styleClass="baseLabel" text="Label" />
             <Label fx:id="basePlayer2" layoutX="5546.0" layoutY="266.0" styleClass="baseLabel" text="Label" />
          </children>

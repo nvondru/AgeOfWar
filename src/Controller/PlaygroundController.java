@@ -47,6 +47,10 @@ public class PlaygroundController implements Initializable {
     private Label moneyLabel;
     @FXML
     private Label recentPlayerLabel;
+    @FXML
+    private Rectangle base1;
+    @FXML
+    private Rectangle base2;
 
 //    Konstruktor    
     public void init(AgeOfWar master) { 
@@ -144,6 +148,22 @@ public class PlaygroundController implements Initializable {
 
     public AnchorPane getPlayfield() {
         return playfield;
+    }
+
+    public Rectangle getBase1() {
+        return base1;
+    }
+
+    public void setBase1(Rectangle base1) {
+        this.base1 = base1;
+    }
+
+    public Rectangle getBase2() {
+        return base2;
+    }
+
+    public void setBase2(Rectangle base2) {
+        this.base2 = base2;
     }
     
     
