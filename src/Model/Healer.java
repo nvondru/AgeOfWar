@@ -23,7 +23,7 @@ public class Healer  extends Unit{
         form.getStyleClass().add("meele");
         cost = 30;
         health = 60;
-        damage = 0;
+        damage = 5;
         armor = 0;
         
         if(myPlayer.getName().equals("Player 2")){

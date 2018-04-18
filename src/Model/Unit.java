@@ -117,36 +117,44 @@ public abstract class Unit {
             @Override
             public void handle(long now) {
                 int index = findIndexOfUnit();
-                if(!enemyPlayer.getListUnits().isEmpty() && index == 0){
-                    target = enemyPlayer.getListUnits().get(0);
-                    if(form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){                        
-                        fight();      
-                    }
-                }else if(form.getBoundsInParent().intersects(enemyPlayer.getBase().getForm().getBoundsInParent())){
-                    attackBase();
-                }
-                if(index != 0){
-                    target = myPlayer.getListUnits().get(index - 1);
-                    if(form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){
-                       // waiting
-                    }else{
-                        walk();
-                    }
-                }else{
-                    walk();
-                }
-
+                checkToFight(index);
+                checkToWait(index);
             }                     
         };    
     }
+    //Check if Unit has to fight
+    private void checkToFight(int index){
+        if(!enemyPlayer.getListUnits().isEmpty() && index == 0){
+            target = enemyPlayer.getListUnits().get(0);
+            if(form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){                        
+                fight();      
+            }
+        }else if(form.getBoundsInParent().intersects(enemyPlayer.getBase().getForm().getBoundsInParent())){
+            attackBase();
+        }
+    }
+    //Check if Unit has to wait one after the other 
+    private void checkToWait(int index){
+        if(index != 0){
+            target = myPlayer.getListUnits().get(index - 1);
+            if(form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){
+               // waiting
+            }else{
+                walk();
+            }
+        }else{
+            walk();
+        }
+    }
+    //Move object
     private void walk(){
         if(myPlayer.getName().equals("Player 1")){
-            form.setLayoutX(form.getLayoutX() + 20);
+            form.setLayoutX(form.getLayoutX() + 2);
         }else{
-            form.setLayoutX(form.getLayoutX() - 20);
+            form.setLayoutX(form.getLayoutX() - 2);
        }         
     }
-    
+    //Index of Unit Array 
     private int findIndexOfUnit(){
         for(Unit index : myPlayer.getListUnits()){
             if(index.getForm().equals(form)){
@@ -155,6 +163,7 @@ public abstract class Unit {
         }
         return -1;
     }
+    
     //Attack Unit
     private void initAttackTransition() {
         attackTransition = new ScaleTransition(Duration.millis(500), form);
