@@ -69,6 +69,9 @@ public class Player {
         }
         return false;
     }
+    public void receiveSalary(int salary){
+        money.set(money.get() + salary);
+    }
 //    Getter/Setter
 
     public ArrayList<Unit> getListUnits() {

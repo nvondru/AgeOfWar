@@ -5,16 +5,12 @@
  */
 package Model;
 
-import java.util.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 /**
@@ -30,18 +26,27 @@ public abstract class Unit {
     protected int attackSpeed;
     protected int moveSpeed;
     protected int cost;
-    protected int range;
+    protected int range = 0;
     protected int salary;
+    
     protected double creationTime;
     protected ImageView form;
     protected double position;
     protected boolean isDead;
+    protected  boolean isFighting = false;
     protected AnimationTimer moveTimer;
-    protected ScaleTransition attackTransition;
+    protected ScaleTransition hitTransition;
+    protected ScaleTransition FUCKYOUTransition;
+    protected AnimationTimer unitBehaviour;
     
     protected Player myPlayer;    
     protected Player enemyPlayer;
     protected Unit target;
+    
+    protected static int UNIT_WIDTH = 100;
+    protected static int UNIT_HEIGHT = 200;
+    protected int stepWidth;
+    protected double distanceToTarget;
     
    
 
@@ -52,21 +57,25 @@ public abstract class Unit {
         this.position = position;
         
         if(myPlayer.getName().equals("Player 1")){
-            enemyPlayer = myPlayer.getRecentGame().getPlayer2(); 
+            enemyPlayer = myPlayer.getRecentGame().getPlayer2();
+            stepWidth = 1;
         }else{
             enemyPlayer = myPlayer.getRecentGame().getPlayer1();
+            stepWidth = -1;
         }  
         
         form = new ImageView();
-        form.setFitWidth(100);
-        form.setFitHeight(200);
+        form.setFitWidth(UNIT_WIDTH);
+        form.setFitHeight(UNIT_HEIGHT);
         form.setLayoutX(position);
         form.setLayoutY(505);   
         
         isDead = false;
-        initMoveTimer();
+        initUnitBehaviour();
+        
         initAttackTransition();
-        move();
+        
+        unitBehaviour.start();
     }
     //Constructor for Base
     public Unit(ImageView form, Player myPlayer){
@@ -76,14 +85,68 @@ public abstract class Unit {
     
     
 //    Methods
-    private void move(){        
-        moveTimer.start();
+    private void initUnitBehaviour() {
+        unitBehaviour = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                searchForTarget();
+                moveIfNeeded();
+//                fightIfPossible();
+            }
+
+            
+        };
     }
     
-    private void fight(){
-        moveTimer.stop();
-        attackTransition.playFromStart();
+    
+    private void searchForTarget() {
+        if(!enemyPlayer.getListUnits().isEmpty()){
+            target = enemyPlayer.getListUnits().get(0);
+        }else{
+            target = enemyPlayer.getBase();
+        }                 
     }
+    private void moveIfNeeded() {
+        int indexOfUnit = myPlayer.getListUnits().indexOf(this);
+        if(indexOfUnit == 0){
+            if(!form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){
+                walkOneStep();
+            }
+        }else{
+            if(!form.getBoundsInParent().intersects(myPlayer.getListUnits().get(indexOfUnit - 1).getForm().getBoundsInParent())){
+                walkOneStep();
+            }
+        }
+    }
+    //Move object
+    private void walkOneStep(){        
+        form.setLayoutX(form.getLayoutX() + stepWidth);                 
+    }
+    private void fightIfPossible() {
+        if(isInRange()){
+                        
+            hitTransition.playFromStart();
+            unitBehaviour.stop();
+            
+        }
+    }
+    private boolean isInRange() {
+        distanceToTarget = form.getLayoutX() - target.getForm().getLayoutX();
+        if(distanceToTarget < 0){
+            distanceToTarget = - distanceToTarget;
+        }
+        if(distanceToTarget <= range * UNIT_WIDTH + UNIT_WIDTH){
+            return true;
+        }else{
+            return false;
+        }        
+        
+        
+    }
+
+   
+    
+    
       
     private void attack(){
         target.takeDamage(damage);
@@ -108,88 +171,36 @@ public abstract class Unit {
     }
     private void die(){
         isDead = true;
-        if(target.getClass().toString().contains("Base")){
+        if(target.equals(enemyPlayer.getBase())){
 
         }else{
-            attackTransition.stop();
             myPlayer.getRecentGame().getPlaygroundController().getPlayfield().getChildren().remove(form);
-            enemyPlayer.setMoney(enemyPlayer.getMoney() + salary); //earn money after kill
+            enemyPlayer.receiveSalary(salary);
             myPlayer.getListUnits().remove(this);
         }
     }
-    
-    private void initMoveTimer() {
-        moveTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                int index = findIndexOfUnit();
-                checkToFight(index);
-                checkToWait(index);
-            }                     
-        };    
-    }
-    //Check if Unit has to fight
-    private void checkToFight(int index){
-        if(!enemyPlayer.getListUnits().isEmpty() && index == 0){
-            target = enemyPlayer.getListUnits().get(0);
-            if(form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){  //                       
-                fight();      
-            }
-        }else if(form.getBoundsInParent().intersects(enemyPlayer.getBase().getForm().getBoundsInParent())){
-            target = enemyPlayer.getBase();
-            fight();
-        }
-    }
-    //Check if Unit has to wait one after the other 
-    private void checkToWait(int index){
-        if(index != 0){
-            target = myPlayer.getListUnits().get(index - 1);
-            if(form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){
-               // waiting
-            }else{
-                walk();
-            }
-        }else{
-            walk();
-        }
-    }
-    //Move object
-    private void walk(){
-        if(myPlayer.getName().equals("Player 1")){
-            form.setLayoutX(form.getLayoutX() + 20);
-        }else{
-            form.setLayoutX(form.getLayoutX() - 20);
-       }         
-    }
-    //Index of Unit Array 
-    private int findIndexOfUnit(){
-            return myPlayer.getListUnits().indexOf(this);
-    }
+
     
     //Attack Unit
     private void initAttackTransition() {
-        attackTransition = new ScaleTransition(Duration.millis(500), form);
-        attackTransition.setByX(1.2);
-        attackTransition.setByY(1.2);
-        attackTransition.setAutoReverse(true);   
-        attackTransition.setCycleCount(2);        
-        attackTransition.setOnFinished((event) -> {
+        hitTransition = new ScaleTransition(Duration.millis(1000), form);
+        hitTransition.setByX(1.2);
+        hitTransition.setByY(1.2); 
+        hitTransition.setOnFinished((event) -> {
             
             attack();
-            if(target.isDead){
-                attackTransition.stop();                
-                move();
-            }else if(target.getClass().toString().contains("Base") && !enemyPlayer.getListUnits().isEmpty()){
-                target = enemyPlayer.getListUnits().get(0);
-                attackTransition.setDelay(Duration.millis(500));            
-                attackTransition.playFromStart();  
-            }else{
-                attackTransition.setDelay(Duration.millis(500));            
-                attackTransition.playFromStart();               
-            }
-            
-        });        
+            FUCKYOUTransition.playFromStart();
+        });
+        
+        FUCKYOUTransition = new ScaleTransition(Duration.millis(1000), form);
+        FUCKYOUTransition.setByX(0.0);
+        FUCKYOUTransition.setByY(0.0);
+        FUCKYOUTransition.setOnFinished((event) -> {
+            System.out.println("hit");
+            unitBehaviour.start();
+        });
     }
+   
   
 //    Getter/Setter
 
@@ -201,6 +212,11 @@ public abstract class Unit {
         return cost;
     }
 
+    
+
+    
+
+    
     
 
     

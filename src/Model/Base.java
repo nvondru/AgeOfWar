@@ -24,6 +24,7 @@ public class Base extends Unit{
 public Base(ImageView form, Player myPlayer){
     super(form,myPlayer);
     health.set(500);
+    
 
 }
     
@@ -31,6 +32,7 @@ public Base(ImageView form, Player myPlayer){
     public void getDamage(int value){
         setHealth(getHealth() - value);
     }
+    
 //    Getter/Setter
 
     public int getHealth() {
