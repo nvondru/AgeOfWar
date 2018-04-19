@@ -71,11 +71,38 @@ public class PlaygroundController implements Initializable {
     
 //    FXML Methods
     @FXML
-    private void movePlayfield(ScrollEvent event) {
-        if(event.getDeltaY() < 0 && playfield.getLayoutX() >= -4000){
-            playfield.setLayoutX(playfield.getLayoutX() - 200);
-        }else if (event.getDeltaY() > 0 && playfield.getLayoutX() <= 0){
-            playfield.setLayoutX(playfield.getLayoutX() + 200);            
+    private void handleScrollActions(ScrollEvent event) {
+        
+        
+        if(event.isControlDown()){
+            if(event.getDeltaY() < 0){
+                recentGame.getPlayer1().getListUnits().forEach((unit) -> {
+                    unit.setStepWidth(unit.getStepWidth() - 1);
+                });
+                recentGame.getPlayer2().getListUnits().forEach((unit) -> {
+                    unit.setStepWidth(unit.getStepWidth() + 1);
+                });
+            }else if (event.getDeltaY() > 0){
+                recentGame.getPlayer1().getListUnits().forEach((unit) -> {
+                    unit.setStepWidth(unit.getStepWidth() + 1);
+                });
+                recentGame.getPlayer2().getListUnits().forEach((unit) -> {
+                    unit.setStepWidth(unit.getStepWidth() - 1);
+                });
+            }
+        }else{
+            if(event.getDeltaY() < 0 && playfield.getLayoutX() >= -4000){
+                playfield.setLayoutX(playfield.getLayoutX() - 200);
+                if(playfield.getLayoutX() < root.getPrefWidth() - playfield.getPrefWidth()){
+                    playfield.setLayoutX(root.getPrefWidth() - playfield.getPrefWidth());
+                }
+                
+            }else if (event.getDeltaY() > 0 && playfield.getLayoutX() <= 0){
+                playfield.setLayoutX(playfield.getLayoutX() + 200); 
+                if(playfield.getLayoutX() > 0){
+                    playfield.setLayoutX(0);
+                }
+            }
         }
     }
     
@@ -86,7 +113,7 @@ public class PlaygroundController implements Initializable {
             recentGame.changePlayer();
             recentPlayerLabel.setText(recentGame.getRecentPLayer().getName());
             connectMoneyLabel();
-        }        
+        }  
     }
     
     @FXML
@@ -141,6 +168,12 @@ public class PlaygroundController implements Initializable {
     }
     
 //  Getter / Setter
+
+    public AnchorPane getRoot() {
+        return root;
+    }
+    
+    
 
     public Scene getScene() {
         return scene;

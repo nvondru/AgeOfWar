@@ -26,6 +26,7 @@ public class Range extends Unit {
         damage = 20;
         armor = 3;
         salary = 10;
+        range = 3;
         
         if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/range_mirrored.bmp").toString()));

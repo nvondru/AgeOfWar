@@ -30,6 +30,7 @@ public class Meele extends Unit{
         damage = 30;
         armor = 5;
         salary = 5;
+        range = 0;
         
                 
         if(myPlayer.getName().equals("Player 2")){

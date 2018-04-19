@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#changePlayer" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PlaygroundController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#changePlayer" onScroll="#handleScrollActions" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PlaygroundController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="130.0" prefWidth="1920.0" spacing="20.0" styleClass="menuBar">
          <children>
@@ -36,7 +36,7 @@
             <Button mnemonicParsing="false" onAction="#createHealer" prefWidth="130.0" text="Healer" />
          </children></HBox>
       <HBox layoutY="1010.0" prefHeight="70.0" prefWidth="1920.0" styleClass="menuBar" />
-      <AnchorPane fx:id="playfield" layoutY="130.0" onScroll="#movePlayfield" prefHeight="880.0" prefWidth="5760.0" styleClass="playground">
+      <AnchorPane fx:id="playfield" layoutY="130.0" prefHeight="880.0" prefWidth="5760.0" styleClass="playground">
          <children>
             <Rectangle fx:id="ground" fill="#399e2a" height="400.0" layoutY="480.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="5760.0" />
             <Label fx:id="basePlayer1" alignment="CENTER" layoutX="143.0" layoutY="257.0" prefHeight="34.0" prefWidth="114.0" styleClass="baseLabel" text="Label" />

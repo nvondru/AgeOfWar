@@ -26,6 +26,7 @@ public class Healer  extends Unit{
         damage = 5;
         armor = 0;
         salary = 20;
+        range = 0;
         
         if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/healer_mirrored.bmp").toString()));
@@ -33,8 +34,24 @@ public class Healer  extends Unit{
             form.setImage(new Image(getClass().getResource("/Images/healer.bmp").toString()));
         }
         
-    }
-    //Helper Methods
+        
     
-    // Getter / Setter
-}
+    }
+        //Helper Methods
+        @Override
+        protected void searchForTarget(){
+            if(!myPlayer.getListUnits().isEmpty()){
+                target = enemyPlayer.getListUnits().get(0);
+            }else{
+                target = this;
+            } 
+        } 
+       
+       // Getter / Setter
+    }
+    
+        
+        
+    
+    
+

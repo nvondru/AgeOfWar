@@ -27,6 +27,7 @@ public class Tank extends Unit{
         damage = 10;
         armor = 10;
         salary = 30;
+        range = 0;
         
         if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/tank_mirrored.bmp").toString()));
