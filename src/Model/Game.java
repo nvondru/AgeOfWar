@@ -28,7 +28,6 @@ public class Game {
     public Game(PlaygroundController playgroundController) {
         System.out.println("Game created");
         this.playgroundController = playgroundController;
-        
         player1 = new Player("Player 1", 400.0, this,playgroundController.getBase1());
         player2 = new Player("Player 2", 5260.0, this, playgroundController.getBase2());
         

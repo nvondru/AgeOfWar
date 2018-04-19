@@ -26,9 +26,10 @@ public class Meele extends Unit{
         form.getStyleClass().add("meele");
         
         cost = 10;
-        health = 120;
+        health.set(120);
         damage = 30;
         armor = 5;
+        salary = 5;
         
                 
         if(myPlayer.getName().equals("Player 2")){

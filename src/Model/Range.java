@@ -22,9 +22,10 @@ public class Range extends Unit {
         
         form.getStyleClass().add("meele");
         cost = 20;
-        health = 100;
+        health.set(120);
         damage = 20;
         armor = 3;
+        salary = 10;
         
         if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/range_mirrored.bmp").toString()));

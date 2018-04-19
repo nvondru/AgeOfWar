@@ -23,9 +23,10 @@ public class Tank extends Unit{
         
         form.getStyleClass().add("meele");
         cost = 40;
-        health = 180;
+        health.set(120);
         damage = 10;
         armor = 10;
+        salary = 30;
         
         if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/tank_mirrored.bmp").toString()));

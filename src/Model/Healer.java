@@ -22,9 +22,10 @@ public class Healer  extends Unit{
         
         form.getStyleClass().add("meele");
         cost = 30;
-        health = 60;
+        health.set(60);
         damage = 5;
         armor = 0;
+        salary = 20;
         
         if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/healer_mirrored.bmp").toString()));

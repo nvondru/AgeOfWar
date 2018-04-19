@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
@@ -48,9 +49,9 @@ public class PlaygroundController implements Initializable {
     @FXML
     private Label recentPlayerLabel;
     @FXML
-    private Rectangle base1;
+    private ImageView base1;
     @FXML
-    private Rectangle base2;
+    private ImageView base2;
 
 //    Konstruktor    
     public void init(AgeOfWar master) { 
@@ -150,19 +151,19 @@ public class PlaygroundController implements Initializable {
         return playfield;
     }
 
-    public Rectangle getBase1() {
+    public ImageView getBase1() {
         return base1;
     }
 
-    public void setBase1(Rectangle base1) {
+    public void setBase1(ImageView base1) {
         this.base1 = base1;
     }
 
-    public Rectangle getBase2() {
+    public ImageView getBase2() {
         return base2;
     }
 
-    public void setBase2(Rectangle base2) {
+    public void setBase2(ImageView base2) {
         this.base2 = base2;
     }
     

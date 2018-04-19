@@ -7,25 +7,25 @@ package Model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 /**
  *
  * @author nicolasvondru
  */
-public class Base {
-    
-    
+public class Base extends Unit{  
 //    Variables
-    private final IntegerProperty health = new SimpleIntegerProperty();
-    private Rectangle form;
+
+
     
 //    Constructor
-    
-    public Base(Rectangle form){
-        health.set(5000);
-        this.form = form;
-    }
+public Base(ImageView form, Player myPlayer){
+    super(form,myPlayer);
+    health.set(500);
+
+}
     
 //    Methods
     public void getDamage(int value){
@@ -45,12 +45,5 @@ public class Base {
         return health;
     }
 
-    public Rectangle getForm() {
-        return form;
-    }
-
-    public void setForm(Rectangle form) {
-        this.form = form;
-    }
-    
+   
 }
