@@ -26,11 +26,12 @@ public class Meele extends Unit{
         form.getStyleClass().add("meele");
         
         cost = 10;
-        health.set(120);
+        maxHealth.set(120);
+        health.set(maxHealth.get());        
         damage = 30;
         armor = 5;
         salary = 5;
-        range = 0;
+        range = 1;
         
                 
         if(myPlayer.getName().equals("Player 2")){
@@ -41,6 +42,11 @@ public class Meele extends Unit{
         
     }
     //Helper Methods
+    @Override
+    protected void doSkill(){
+        hitTransition.play();
+    }
+        
     
     // Getter / Setter
 

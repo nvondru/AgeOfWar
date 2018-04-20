@@ -26,6 +26,7 @@ public abstract class Unit {
     protected Unit target;
     
     //    Variables
+    protected final IntegerProperty maxHealth = new SimpleIntegerProperty();
     protected final IntegerProperty health = new SimpleIntegerProperty();
     protected int armor;
     protected int damage;
@@ -34,7 +35,9 @@ public abstract class Unit {
     protected int cost;
     protected int range;
     protected int salary;    
+    protected int intellect;
     protected double creationTime;
+    protected int indexOfUnit;
     
     protected ImageView form;
     protected double position;
@@ -95,6 +98,7 @@ public abstract class Unit {
     
     
     protected void searchForTarget() {
+        indexOfUnit = myPlayer.getListUnits().indexOf(this);
         if(!enemyPlayer.getListUnits().isEmpty()){
             target = enemyPlayer.getListUnits().get(0);
         }else{
@@ -102,7 +106,6 @@ public abstract class Unit {
         }                 
     }
     private void moveIfNeeded() {
-        int indexOfUnit = myPlayer.getListUnits().indexOf(this);
         if(indexOfUnit == 0){
             if(!form.getBoundsInParent().intersects(target.getForm().getBoundsInParent())){
                 walkOneStep();
@@ -114,20 +117,22 @@ public abstract class Unit {
         }
     }
     //Move object
-    private void walkOneStep(){        
-        form.setLayoutX(form.getLayoutX() + stepWidth);                 
+    private void walkOneStep(){  
+        form.setLayoutX(form.getLayoutX() + stepWidth);                
+          
     }
     private void fightIfPossible() {
         if(isInRange()){   
-            hitTransition.play();  
+            doSkill();  
         }
     }
     private boolean isInRange() {
         distanceToTarget = form.getLayoutX() - target.getForm().getLayoutX();
+        boolean isOnBase = form.getBoundsInParent().intersects(enemyPlayer.getBase().getForm().getBoundsInParent());
         if(distanceToTarget < 0){
             distanceToTarget = - distanceToTarget;
         }
-        if(distanceToTarget <= range * UNIT_WIDTH ){
+        if(distanceToTarget <= range * UNIT_WIDTH || isOnBase){
             return true;
         }else{
             return false;
@@ -140,9 +145,7 @@ public abstract class Unit {
 
     public void takeDamage(int damageTaken){
         int reducedDamage = reduceDamge(damageTaken);
-        health.set(health.get() - reducedDamage);       
-        System.out.println("Life Unit from " + myPlayer.getName() + " is: " + health);    
-        System.out.println("health" + health.get());
+        health.set(health.get() - reducedDamage);    
         if(health.get() <= 0){
             die();
         }        
@@ -173,6 +176,9 @@ public abstract class Unit {
         hitTransition.setOnFinished((event) -> {
             attack();
         });       
+    }
+    protected void doSkill(){
+        
     }
   
 //    Getter/Setter

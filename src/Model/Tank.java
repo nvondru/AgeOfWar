@@ -23,11 +23,12 @@ public class Tank extends Unit{
         
         form.getStyleClass().add("meele");
         cost = 40;
-        health.set(120);
-        damage = 10;
+        maxHealth.set(120);
+        health.set(maxHealth.get());
+        damage = 15;
         armor = 10;
         salary = 30;
-        range = 0;
+        range = 1;
         
         if(myPlayer.getName().equals("Player 2")){
             form.setImage(new Image(getClass().getResource("/Images/tank_mirrored.bmp").toString()));
@@ -37,7 +38,10 @@ public class Tank extends Unit{
         
     }
     //Helper Methods
-    
+    @Override
+    protected void doSkill(){
+        hitTransition.play();
+    }
     // Getter / Setter
 
 }

@@ -22,7 +22,8 @@ public class Range extends Unit {
         
         form.getStyleClass().add("meele");
         cost = 20;
-        health.set(120);
+        maxHealth.set(120);
+        health.set(maxHealth.get());
         damage = 20;
         armor = 3;
         salary = 10;
@@ -36,6 +37,9 @@ public class Range extends Unit {
         
     }
     //Helper Methods
-    
+    @Override
+    protected void doSkill(){
+        hitTransition.play();
+    }   
     // Getter / Setter
 }
