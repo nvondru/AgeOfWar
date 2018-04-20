@@ -35,7 +35,6 @@ public abstract class Unit {
     protected int cost;
     protected int range;
     protected int salary;    
-    protected int intellect;
     protected double creationTime;
     protected int indexOfUnit;
     

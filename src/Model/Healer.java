@@ -20,6 +20,7 @@ import javafx.util.Duration;
 public class Healer  extends Unit{
     //Variables 
     Timeline time = new Timeline();
+    private int intellect;
     ArrayList<Image> imageList = new ArrayList<>();
    
     
@@ -62,7 +63,6 @@ public class Healer  extends Unit{
         });
         time.setCycleCount(Timeline.INDEFINITE); 
         time.getKeyFrames().addAll(k1,k2);
-        time.setDelay(Duration.ONE);
 
     }
         @Override
@@ -78,9 +78,9 @@ public class Healer  extends Unit{
         } 
         @Override
         protected void doSkill(){
-            if(enemyPlayer.getListUnits().indexOf(target)>= 0){
+            if(enemyPlayer.getListUnits().contains(target)){
                hitTransition.play();
-           }else if(myPlayer.getListUnits().indexOf(target)>= 0 && target.health.get() < target.maxHealth.get()){
+           }else if(myPlayer.getListUnits().contains(target) && target.health.get() < target.maxHealth.get()){
                 time.play();
            }else if(target == enemyPlayer.getBase()){
                hitTransition.play();
