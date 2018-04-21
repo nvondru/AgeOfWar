@@ -33,17 +33,21 @@ public class Meele extends Unit{
         range = 1;
         
                 
-        if(myPlayer.getName().equals("Player 2")){
-            unitImage.setImage(new Image(getClass().getResource("/Images/meele_mirrored.png").toString()));
+        if(myPlayer.getName().equals("Player 1")){
+            waitingSprite = new Image(getClass().getResource("/Images/Range/waiting_sprite.png").toString());
+            skillSprite = new Image(getClass().getResource("/Images/Range/skill_sprite.png").toString());
         }else{
-            unitImage.setImage(new Image(getClass().getResource("/Images/meele.png").toString()));
+            waitingSprite = new Image(getClass().getResource("/Images/Range/waiting_sprite_mirrored.png").toString());
+            skillSprite = new Image(getClass().getResource("/Images/Range/skill_sprite_mirrored.png").toString());
         }
+        
+        unitImage.setImage(waitingSprite);
         
     }
     //Helper Methods
     @Override
     protected void useSkill(){
-        hitTransition.play();
+        skillEvent.play();
     }
         
     

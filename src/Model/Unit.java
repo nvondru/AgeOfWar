@@ -7,9 +7,12 @@ package Model;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -17,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import static javax.management.Query.value;
 
 /**
  *
@@ -58,8 +62,17 @@ public abstract class Unit {
     protected Rectangle healthBarRemaining;
     protected ImageView unitImage;
     
+    protected Image waitingSprite;
+    protected Image walkingSprite;
+    protected Image skillSprite;
+    
     //    animations
+    @Deprecated
     protected FadeTransition hitTransition;
+    
+    protected Timeline skillEvent;
+    
+    protected SkillAnimation skillAnimation;
     protected AnimationTimer unitBehaviour;
 
 //    predefined widths & heights for visual components
@@ -101,6 +114,8 @@ public abstract class Unit {
         buildForm(UNIT_HEALTHBAR_WIDTH, UNIT_HEALTHBAR_HEIGHT, UNIT_WIDTH, UNIT_HEIGHT, UNIT_FORM_WIDTH, UNIT_FORM_HEIGHT);
         initUnitBehaviour();   
         connectHealthToBar();
+        initSkillAnimation();
+        initSkillEvent();
         initAttackTransition();
                 
         unitBehaviour.start();        
@@ -243,6 +258,32 @@ public abstract class Unit {
         hitTransition.setOnFinished((event) -> {
             attack();
         });       
+    }
+    private void initSkillEvent(){
+        skillEvent = new Timeline();
+        KeyFrame k1 = new KeyFrame(Duration.millis(0), (event) -> {
+            unitImage.setImage(skillSprite);
+            skillAnimation.play();
+        });
+        KeyFrame k2 = new KeyFrame(Duration.millis(900), (event) -> {
+            attack();
+        });
+        KeyFrame k3 = new KeyFrame(Duration.millis(1000), (event) -> {
+            
+        });
+        skillEvent.getKeyFrames().addAll(k1, k2, k3);
+    }
+    private void initSkillAnimation(){
+        skillAnimation = new SkillAnimation(
+                unitImage, 
+                Duration.millis(1000), 
+                4, 
+                4, 
+                0, 
+                0, 
+                UNIT_WIDTH, 
+                UNIT_HEIGHT
+        );        
     }
     
 //    A visual implementation of unit is built 
