@@ -20,7 +20,6 @@ public class Range extends Unit {
     public Range(double position, Player myPlayer){
         super(position, myPlayer); 
         
-        form.getStyleClass().add("meele");
         cost = 20;
         maxHealth.set(120);
         health.set(maxHealth.get());
@@ -30,15 +29,15 @@ public class Range extends Unit {
         range = 3;
         
         if(myPlayer.getName().equals("Player 2")){
-            form.setImage(new Image(getClass().getResource("/Images/range_mirrored.bmp").toString()));
+            unitImage.setImage(new Image(getClass().getResource("/Images/range_mirrored.bmp").toString()));
         }else{
-            form.setImage(new Image(getClass().getResource("/Images/range.bmp").toString()));
+            unitImage.setImage(new Image(getClass().getResource("/Images/range.bmp").toString()));
         }
         
     }
     //Helper Methods
     @Override
-    protected void doSkill(){
+    protected void useSkill(){
         hitTransition.play();
     }   
     // Getter / Setter

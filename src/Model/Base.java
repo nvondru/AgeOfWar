@@ -5,11 +5,10 @@
  */
 package Model;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -17,35 +16,48 @@ import javafx.scene.shape.Rectangle;
  */
 public class Base extends Unit{  
 //    Variables
-
-
+    
+private IntegerProperty test = new SimpleIntegerProperty();
     
 //    Constructor
-public Base(ImageView form, Player myPlayer){
-    super(form,myPlayer);
-    health.set(500);
-    
+public Base(double spawnPosition, Player myPlayer){
+    super(spawnPosition, myPlayer, true);
 
-}
+    maxHealth.set(500);
+    health.set(maxHealth.get());
+    salary = 0;
     
+    if(myPlayer.getName().equals("Player 2")){
+        unitImage.setImage(new Image(getClass().getResource("/Images/base_mirrored.bmp").toString()));
+    }else{
+        unitImage.setImage(new Image(getClass().getResource("/Images/base.bmp").toString()));        
+    }
+}
+
 //    Methods
-    public void getDamage(int value){
-        setHealth(getHealth() - value);
+    
+    @Override
+    public void useSkill(){
+        
+    }
+    @Override
+    public void die(){
+        myPlayer.getRecentGame().getPlaygroundController().getPlayfield().getChildren().remove(form);        
+        myPlayer.getListUnits().remove(this);
     }
     
 //    Getter/Setter
 
-    public int getHealth() {
+    public double getHealth() {
         return health.get();
     }
 
-    public void setHealth(int value) {
+    public void setHealth(double value) {
         health.set(value);
     }
 
-    public IntegerProperty healthProperty() {
+    public DoubleProperty healthProperty() {
         return health;
     }
 
-   
 }

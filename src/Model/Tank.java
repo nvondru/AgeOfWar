@@ -21,7 +21,6 @@ public class Tank extends Unit{
     public Tank(double position, Player myPlayer){
         super(position, myPlayer);    
    
-        form.getStyleClass().add("meele");
         cost = 40;
         maxHealth.set(120);
         health.set(maxHealth.get());
@@ -31,15 +30,15 @@ public class Tank extends Unit{
         range = 1;
         
         if(myPlayer.getName().equals("Player 2")){
-            form.setImage(new Image(getClass().getResource("/Images/tank_mirrored.bmp").toString()));
+            unitImage.setImage(new Image(getClass().getResource("/Images/tank_mirrored.bmp").toString()));
         }else{
-            form.setImage(new Image(getClass().getResource("/Images/tank.bmp").toString()));        
+            unitImage.setImage(new Image(getClass().getResource("/Images/tank.bmp").toString()));        
         }
         
     }
     //Helper Methods
     @Override
-    protected void doSkill(){
+    protected void useSkill(){
         hitTransition.play();
     }
     // Getter / Setter

@@ -20,55 +20,77 @@ import javafx.scene.shape.Rectangle;
  */
 public class Player {
     
-//    Variables
-    private final IntegerProperty money = new SimpleIntegerProperty();
+//    Associations
     private ArrayList<Unit> listUnits;
     private Base base;
-    private final StringProperty name = new SimpleStringProperty();
-    private double position;
     private Game recentGame;
+    
+//    Variables
+    private final IntegerProperty money = new SimpleIntegerProperty();    
+    private final StringProperty name = new SimpleStringProperty();
+    private double spawnPosition;
+    
 
 //    Constructor
     
-    public Player(String name, double position, Game recentGame, ImageView form){
-        this.recentGame = recentGame;
+    public Player(String name, Game recentGame){
+        this.recentGame = recentGame;        
         this.name.set(name);
-        this.position = position;
+        
+        // defines the default spawn position for a moving unit, depending on players name
+        // has to be adjusted when a base is created
+        if(name.equals("Player 1")){
+            spawnPosition = 400;
+        }else{
+            spawnPosition = recentGame.getPlaygroundController().getPlayfield().getPrefWidth() - 500;
+        }
+        
         money.set(2000);
         listUnits = new ArrayList<>();
-        base = new Base(form, this);
-        
+        base = new Base(spawnPosition, this);
+        getRecentGame().getPlaygroundController().getPlayfield().getChildren().add(base.getForm());        
     }
     
     
 //    Methods
-    //create unit 
-    public boolean createUnit(String unitType){
+   
+    //creates new unit for this player, if he can afford it
+    public void buyUnit(String unitType){ 
+        Unit newUnit;
         switch(unitType){
             case "meele":
-                Meele meele = new Meele(position, this);
-                return buyUnit(meele);
+                newUnit = new Meele(spawnPosition, this);   
+                break;
             case "range":
-                Range range = new Range(position, this);
-                return buyUnit(range);
+                newUnit = new Range(spawnPosition, this);                
+                break;
             case "tank":
-                Tank tank = new Tank(position, this);
-                return buyUnit(tank);
+                newUnit = new Tank(spawnPosition, this);                
+                break;
             case "healer":
-                Healer healer = new Healer(position, this);
-                return buyUnit(healer);
+                newUnit = new Healer(spawnPosition, this); 
+                break;
+            default:
+                newUnit = new Meele(spawnPosition, this);
+                break;
         }
-        return false;
+        if(canAffordUnit(newUnit)){
+            setMoney(getMoney() - newUnit.getCost());
+            listUnits.add(newUnit);
+            recentGame.getPlaygroundController().getPlayfield().getChildren().add(newUnit.getForm());
+        }        
     }
-    //Check money and add the unit to the array
-    public boolean buyUnit(Unit unit){
-        if(getMoney() >= unit.getCost()){
-           listUnits.add(unit); 
-           setMoney(getMoney() - unit.getCost());
+    
+    //checks if player has enough money for the requested unit 
+    public boolean canAffordUnit(Unit unitToCheck){
+        if(getMoney() >= unitToCheck.getCost()){           
            return true;
-        }
-        return false;
+        }else{
+           return false;  
+        }              
     }
+    
+    // receives money, whenever an enemy unit dies
     public void receiveSalary(int salary){
         money.set(money.get() + salary);
     }

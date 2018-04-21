@@ -12,25 +12,20 @@ import Controller.PlaygroundController;
  * @author nicolasvondru
  */
 public class Game {
-    
-//    Variables
+//    Associations
     private Player player1;
-    private Player player2;
-    
-    private Player recentPlayer;
-    
+    private Player player2;        
     private PlaygroundController playgroundController;
     
+//    Variables
+    private Player recentPlayer; 
     
     
-//    Constructor
-    
+//    Constructor    
     public Game(PlaygroundController playgroundController) {
-        System.out.println("Game created");
         this.playgroundController = playgroundController;
-        player1 = new Player("Player 1", 400.0, this,playgroundController.getBase1());
-        player2 = new Player("Player 2", 5260.0, this, playgroundController.getBase2());
-        
+        player1 = new Player("Player 1", this);
+        player2 = new Player("Player 2", this);        
         recentPlayer = player1;
     }
     

@@ -19,7 +19,7 @@ import javafx.util.Duration;
  */
 public class Healer  extends Unit{
     //Variables 
-    Timeline time = new Timeline();
+    Timeline healAnimation = new Timeline();
     private int intellect;
     ArrayList<Image> imageList = new ArrayList<>();
    
@@ -28,24 +28,24 @@ public class Healer  extends Unit{
     public Healer(double position, Player myPlayer){
         super(position, myPlayer);  
         
-        form.getStyleClass().add("meele");
         cost = 30;
         maxHealth.set(60);
-        health.set(maxHealth.get());
+        health.set(40);
         damage = 10;
         armor = 0;
         salary = 20;
         range = 2;
-        intellect = 3;
+        intellect = 8;
         initHealingAnimation();
+        
         if(myPlayer.getName().equals("Player 2")){
             imageList.add(new Image(getClass().getResource("/Images/healer_mirrored.bmp").toString()));
             imageList.add(new Image(getClass().getResource("/Images/healer_HealingAnimation_mirrored.bmp").toString()));
-            form.setImage(imageList.get(0));
+            unitImage.setImage(imageList.get(0));
         }else{
             imageList.add(new Image(getClass().getResource("/Images/healer.bmp").toString()));
             imageList.add(new Image(getClass().getResource("/Images/healer_HealingAnimation.bmp").toString()));
-            form.setImage(imageList.get(0));            
+            unitImage.setImage(imageList.get(0));            
         }
         
         
@@ -53,16 +53,22 @@ public class Healer  extends Unit{
     }
 //      Helper Methods
     private void initHealingAnimation(){
-        KeyFrame k1 = new KeyFrame(Duration.millis(500), (ActionEvent t) -> {
-                form.setImage(imageList.get(1));
-        });
-        KeyFrame k2 = new KeyFrame(Duration.millis(1000), (ActionEvent t) -> {
-                form.setImage(imageList.get(0));
+        KeyFrame k1 = new KeyFrame(Duration.millis(0), (ActionEvent t) -> {
+                unitImage.setImage(imageList.get(1));
                 heal();
+                System.out.println("healed");
                 
         });
-        time.setCycleCount(Timeline.INDEFINITE); 
-        time.getKeyFrames().addAll(k1,k2);
+        
+        KeyFrame k2 = new KeyFrame(Duration.millis(1000), (ActionEvent t) -> {
+                unitImage.setImage(imageList.get(0));
+                
+        });
+        KeyFrame k3= new KeyFrame(Duration.millis(2000), (ActionEvent t) -> {
+                
+        });        
+         
+        healAnimation.getKeyFrames().addAll(k1,k2, k3);
 
     }
         @Override
@@ -72,27 +78,31 @@ public class Healer  extends Unit{
                 target = myPlayer.getListUnits().get(0);
             }else if(!enemyPlayer.getListUnits().isEmpty()){ //when u are u are in front of an enemy Unit
                 target = enemyPlayer.getListUnits().get(0);
-            }else{//When u are in front of enemy Base
+            }else if(form.getBoundsInParent().intersects(enemyPlayer.getBase().getForm().getBoundsInParent())){//When u are in front of enemy Base
                 target = enemyPlayer.getBase();
+            }else if(enemyPlayer.getBase().getHealth() <= 0){//When enemy base is down
+                target = null;
+            }else{
+                target = this;
             }
         } 
         @Override
-        protected void doSkill(){
+        protected void useSkill(){
             if(enemyPlayer.getListUnits().contains(target)){
                hitTransition.play();
            }else if(myPlayer.getListUnits().contains(target) && target.health.get() < target.maxHealth.get()){
-                time.play();
-           }else if(target == enemyPlayer.getBase()){
+                healAnimation.play();
+           }else if(target.equals(enemyPlayer.getBase())){
                hitTransition.play();
            }
         }
         private void heal(){
-            if((target.health.get() + intellect) > target.maxHealth.get()){ //If u want to overheal unit
+            if((target.health.get() + intellect) > target.maxHealth.get()){ //If u are overhealing the target
                 target.health.set(target.maxHealth.get());
             }else{
                 target.health.set(target.health.get() + intellect); 
-            }
-            time.stop();
+            }            
+            
         }
        
        // Getter / Setter

@@ -28,10 +28,12 @@ import javafx.scene.shape.Rectangle;
  */
 public class PlaygroundController implements Initializable {
     
-//    Variables
-    private AgeOfWar master;
-    private Scene scene;
+//    Associations
+    private AgeOfWar master;    
     private Game recentGame;
+    
+//    Variables
+    private Scene scene;
     
 //    FXML-Variables
     @FXML
@@ -48,10 +50,7 @@ public class PlaygroundController implements Initializable {
     private Label moneyLabel;
     @FXML
     private Label recentPlayerLabel;
-    @FXML
-    private ImageView base1;
-    @FXML
-    private ImageView base2;
+    
 
 //    Konstruktor    
     public void init(AgeOfWar master) { 
@@ -60,7 +59,7 @@ public class PlaygroundController implements Initializable {
         this.master = master; 
         
         recentGame = new Game(this);        
-        connectBaseLabels();        
+//        connectBaseLabels();        
         connectMoneyLabel();
         
         recentPlayerLabel.setText(recentGame.getRecentPLayer().getName());
@@ -117,32 +116,23 @@ public class PlaygroundController implements Initializable {
     }
     
     @FXML
-    private void createMeele(ActionEvent event) { 
-        
-        if(recentGame.getRecentPLayer().createUnit("meele")){
-            playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
-        }
+    private void createMeele(ActionEvent event) {        
+        recentGame.getRecentPLayer().buyUnit("meele");
     }
     
     @FXML
     private void createRange(ActionEvent event) {
-        if(recentGame.getRecentPLayer().createUnit("range")){
-            playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
-        }
+        recentGame.getRecentPLayer().buyUnit("range");
     }
     
     @FXML
     private void createTank(ActionEvent event) {
-        if(recentGame.getRecentPLayer().createUnit("tank")){
-            playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
-        }
+        recentGame.getRecentPLayer().buyUnit("tank");
     }
 
     @FXML
     private void createHealer(ActionEvent event) {
-        if(recentGame.getRecentPLayer().createUnit("healer")){
-            playfield.getChildren().add(recentGame.getRecentPLayer().getListUnits().get(recentGame.getRecentPLayer().getListUnits().size() - 1).getForm());
-        }
+        recentGame.getRecentPLayer().buyUnit("healer");
     }
     
 //    Helper Methods
@@ -184,21 +174,21 @@ public class PlaygroundController implements Initializable {
         return playfield;
     }
 
-    public ImageView getBase1() {
-        return base1;
-    }
-
-    public void setBase1(ImageView base1) {
-        this.base1 = base1;
-    }
-
-    public ImageView getBase2() {
-        return base2;
-    }
-
-    public void setBase2(ImageView base2) {
-        this.base2 = base2;
-    }
+//    public ImageView getBase1() {
+//        return base1;
+//    }
+//
+//    public void setBase1(ImageView base1) {
+//        this.base1 = base1;
+//    }
+//
+//    public ImageView getBase2() {
+//        return base2;
+//    }
+//
+//    public void setBase2(ImageView base2) {
+//        this.base2 = base2;
+//    }
     
     
     

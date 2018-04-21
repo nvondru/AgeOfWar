@@ -23,7 +23,6 @@ public class Meele extends Unit{
     public Meele(double position, Player myPlayer){
         super(position, myPlayer);
                 
-        form.getStyleClass().add("meele");
         
         cost = 10;
         maxHealth.set(120);
@@ -35,15 +34,15 @@ public class Meele extends Unit{
         
                 
         if(myPlayer.getName().equals("Player 2")){
-            form.setImage(new Image(getClass().getResource("/Images/meele_mirrored.png").toString()));
+            unitImage.setImage(new Image(getClass().getResource("/Images/meele_mirrored.png").toString()));
         }else{
-            form.setImage(new Image(getClass().getResource("/Images/meele.png").toString()));
+            unitImage.setImage(new Image(getClass().getResource("/Images/meele.png").toString()));
         }
         
     }
     //Helper Methods
     @Override
-    protected void doSkill(){
+    protected void useSkill(){
         hitTransition.play();
     }
         
