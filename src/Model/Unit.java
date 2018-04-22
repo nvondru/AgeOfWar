@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -60,20 +61,20 @@ public abstract class Unit {
     protected AnchorPane healthBar;
     protected Rectangle healthBarMax;
     protected Rectangle healthBarRemaining;
-    protected ImageView unitImage;
-    
+    protected ImageView unitImage;    
     protected Image waitingSprite;
     protected Image walkingSprite;
     protected Image skillSprite;
     
     //    animations
-    @Deprecated
-    protected FadeTransition hitTransition;
+    
     
     protected Timeline skillEvent;
     
     protected SkillAnimation skillAnimation;
-    protected AnimationTimer unitBehaviour;
+    protected int framesCount;
+    protected int columnsCount;
+    protected Timeline unitBehaviour;
 
 //    predefined widths & heights for visual components
     protected final int UNIT_WIDTH = 100;
@@ -93,7 +94,7 @@ public abstract class Unit {
     
     protected final  int BASE_HEALTHBAR_WIDTH = 350;
     protected final  int BASE_HEALTHBAR_HEIGHT = 40;
-    
+    int counter = 0;
     
 //    Constructor    
     public Unit(double spawnPosition, Player myPlayer){        
@@ -114,11 +115,9 @@ public abstract class Unit {
         buildForm(UNIT_HEALTHBAR_WIDTH, UNIT_HEALTHBAR_HEIGHT, UNIT_WIDTH, UNIT_HEIGHT, UNIT_FORM_WIDTH, UNIT_FORM_HEIGHT);
         initUnitBehaviour();   
         connectHealthToBar();
-        initSkillAnimation();
-        initSkillEvent();
-        initAttackTransition();
+        initSkillEvent();        
                 
-        unitBehaviour.start();        
+        unitBehaviour.play();
     }
     
     //Constructor for Base
@@ -138,19 +137,57 @@ public abstract class Unit {
     
 //    Methods
     
+    private void initSkillEvent(){
+        skillEvent = new Timeline();
+        
+        KeyFrame k1 = new KeyFrame(Duration.millis(0), (event) -> {
+            unitImage.setImage(skillSprite);
+            skillAnimation.play();
+        });
+        KeyFrame k2 = new KeyFrame(Duration.millis(450), (event) -> {
+            attack();
+        });
+        KeyFrame k3 = new KeyFrame(Duration.millis(500), (event) -> {
+            
+        });
+        skillEvent.getKeyFrames().addAll(k1, k2, k3);
+    }
+    
+    protected void initSkillAnimation(){
+        skillAnimation = new SkillAnimation(
+                unitImage, 
+                Duration.millis(500), 
+                framesCount, 
+                columnsCount, 
+                0, 
+                0, 
+                UNIT_WIDTH, 
+                UNIT_HEIGHT
+        ); 
+        skillAnimation.setOnFinished((event) -> {
+            unitImage.setImage(waitingSprite);
+            unitImage.setViewport(new Rectangle2D(0, 0, UNIT_WIDTH, UNIT_HEIGHT));
+        });
+    }
+    
 //    A unit with unitBahviour will do the following actions every frame (60 per second):
 //      - search for its preferred target (is overriden by healer), 
 //      - move one stepWidth if: doesnt collide with first enemy unit or doesn't collide with neighbour ally unit)
 //      - use its own standard skill if: there is a target (always unless enemy base is down) and target is in range 
     private void initUnitBehaviour() {
-        unitBehaviour = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                searchForTarget();
-                moveIfNeeded();                
-                useSkillIfPossible();                
-            }
-        };
+        unitBehaviour = new Timeline();
+        
+        unitBehaviour.setCycleCount(Timeline.INDEFINITE);
+        KeyFrame k1 = new KeyFrame(Duration.millis(5), (event) -> {
+
+            searchForTarget();
+            moveIfNeeded();                
+            useSkillIfPossible();
+            counter ++;
+           
+        });
+        unitBehaviour.getKeyFrames().add(k1);
+                    
     }  
     
 //    Possible targets: First enemy unit, enemy base, no target
@@ -249,42 +286,8 @@ public abstract class Unit {
         unitBehaviour.stop();        
     }
     
-    //Attack target
-    private void initAttackTransition() {
-        hitTransition = new FadeTransition(Duration.millis(500), unitImage);          
-        hitTransition.setToValue(0.5);
-        hitTransition.setAutoReverse(true);
-        hitTransition.setCycleCount(2);
-        hitTransition.setOnFinished((event) -> {
-            attack();
-        });       
-    }
-    private void initSkillEvent(){
-        skillEvent = new Timeline();
-        KeyFrame k1 = new KeyFrame(Duration.millis(0), (event) -> {
-            unitImage.setImage(skillSprite);
-            skillAnimation.play();
-        });
-        KeyFrame k2 = new KeyFrame(Duration.millis(900), (event) -> {
-            attack();
-        });
-        KeyFrame k3 = new KeyFrame(Duration.millis(1000), (event) -> {
-            
-        });
-        skillEvent.getKeyFrames().addAll(k1, k2, k3);
-    }
-    private void initSkillAnimation(){
-        skillAnimation = new SkillAnimation(
-                unitImage, 
-                Duration.millis(1000), 
-                4, 
-                4, 
-                0, 
-                0, 
-                UNIT_WIDTH, 
-                UNIT_HEIGHT
-        );        
-    }
+    
+    
     
 //    A visual implementation of unit is built 
 //    Contains: Containers for healthBar & unitImage
@@ -324,7 +327,10 @@ public abstract class Unit {
         
         unitImage = new ImageView();
         unitImage.setFitWidth(unitWidth);
-        unitImage.setFitHeight(unitHeight);  
+        unitImage.setFitHeight(unitHeight); 
+        System.out.println(unitWidth);
+        unitImage.setViewport(new Rectangle2D(0, 0, unitWidth, unitHeight));
+
         
         healthBar.getChildren().addAll(healthBarMax, healthBarRemaining);
         healthBarForm.getChildren().add(healthBar);

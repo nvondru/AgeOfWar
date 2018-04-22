@@ -8,6 +8,7 @@ package Model;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -17,6 +18,7 @@ import javafx.util.Duration;
  */
 public class SkillAnimation extends Transition{
     private final ImageView unitImage;
+    private Image skillSprite;
     private final int count;
     private final int columns;
     private final int offsetX;
@@ -40,12 +42,11 @@ public class SkillAnimation extends Transition{
         this.width     = unitWidth;
         this.height    = unitHeight;
         setCycleDuration(duration);
-        setInterpolator(Interpolator.LINEAR);
+        setInterpolator(Interpolator.LINEAR );
     }
 
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);
-        
         if (index != lastIndex) {
             final int x = (index % columns) * width  + offsetX;
             final int y = (index / columns) * height + offsetY;

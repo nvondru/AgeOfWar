@@ -29,15 +29,20 @@ public class Tank extends Unit{
         salary = 30;
         range = 1;
         
+        framesCount = 6;
+        columnsCount = 6;
+        
         if(myPlayer.getName().equals("Player 1")){
-            waitingSprite = new Image(getClass().getResource("/Images/Range/waiting_sprite.png").toString());
-            skillSprite = new Image(getClass().getResource("/Images/Range/skill_sprite.png").toString());
+            waitingSprite = new Image(getClass().getResource("/Images/Tank/waiting_sprite.png").toString());
+            skillSprite = new Image(getClass().getResource("/Images/Tank/skill_sprite.png").toString());
         }else{
-            waitingSprite = new Image(getClass().getResource("/Images/Range/waiting_sprite_mirrored.png").toString());
-            skillSprite = new Image(getClass().getResource("/Images/Range/skill_sprite_mirrored.png").toString());
+            waitingSprite = new Image(getClass().getResource("/Images/Tank/waiting_sprite_mirrored.png").toString());
+            skillSprite = new Image(getClass().getResource("/Images/Tank/skill_sprite_mirrored.png").toString());
         }
         
         unitImage.setImage(waitingSprite);
+        
+        initSkillAnimation();
         
     }
     //Helper Methods

@@ -32,16 +32,21 @@ public class Meele extends Unit{
         salary = 5;
         range = 1;
         
+        framesCount = 6;
+        columnsCount = 6;        
+        
                 
         if(myPlayer.getName().equals("Player 1")){
-            waitingSprite = new Image(getClass().getResource("/Images/Range/waiting_sprite.png").toString());
-            skillSprite = new Image(getClass().getResource("/Images/Range/skill_sprite.png").toString());
+            waitingSprite = new Image(getClass().getResource("/Images/Meele/waiting_sprite.png").toString());
+            skillSprite = new Image(getClass().getResource("/Images/Meele/skill_sprite.png").toString());
         }else{
-            waitingSprite = new Image(getClass().getResource("/Images/Range/waiting_sprite_mirrored.png").toString());
-            skillSprite = new Image(getClass().getResource("/Images/Range/skill_sprite_mirrored.png").toString());
+            waitingSprite = new Image(getClass().getResource("/Images/Meele/waiting_sprite_mirrored.png").toString());
+            skillSprite = new Image(getClass().getResource("/Images/Meele/skill_sprite_mirrored.png").toString());
         }
         
         unitImage.setImage(waitingSprite);
+        
+        initSkillAnimation();
         
     }
     //Helper Methods

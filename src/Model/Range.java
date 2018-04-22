@@ -27,6 +27,9 @@ public class Range extends Unit {
         salary = 10;
         range = 3;
         
+        framesCount = 4;
+        columnsCount = 4;
+        
         if(myPlayer.getName().equals("Player 1")){
             waitingSprite = new Image(getClass().getResource("/Images/Range/waiting_sprite.png").toString());
             skillSprite = new Image(getClass().getResource("/Images/Range/skill_sprite.png").toString());
@@ -36,6 +39,7 @@ public class Range extends Unit {
         }
         
         unitImage.setImage(waitingSprite);
+        initSkillAnimation();
         
     }
     //Helper Methods
